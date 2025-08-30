@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Assessment - JAS Training</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #84D11E;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .logo-tagline {
+            font-size: 0.75rem;
+            color: #666;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-top: -4px;
+        }
+
+        .phone-cta {
+            background: #84D11E;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .phone-cta:hover {
+            background: #6BB91A;
+            transform: translateY(-1px);
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 40px auto;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid #84D11E;
+        }
+
+        .welcome-greeting {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 16px;
+        }
+
+        .welcome-greeting .name {
+            color: #84D11E;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #84D11E, #6BB91A);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .start-btn:hover {
+            background: linear-gradient(135deg, #6BB91A, #5aa517);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(132, 209, 30, 0.3);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #f1f5f9;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #84D11E, #6BB91A);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .question-card.active {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-number {
+            color: #84D11E;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-title {
+            font-size: 1.6rem;
+            color: #2d3748;
+            margin-bottom: 16px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .question-subtitle {
+            color: #6b7280;
+            margin-bottom: 35px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Options */
+        .options-container {
+            margin-bottom: 35px;
+        }
+
+        .option {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: #84D11E;
+            transform: translateX(4px);
+        }
+
+        .option.selected {
+            border-color: #84D11E;
+            background: #f0fdf4;
+        }
+
+        .option-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .option-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .option-title {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 1.1rem;
+            line-height: 1.3;
+        }
+
+        .option-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin-left: 36px;
+            line-height: 1.4;
+        }
+
+        .risk-critical { background: #dc2626; }
+        .risk-warning { background: #f59e0b; }
+        .risk-good { background: #10b981; }
+
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 35px;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-primary {
+            background: #84D11E;
+            color: white;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #e2e8f0;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #6BB91A;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 15px;
+            }
+
+            .welcome-section {
+                padding: 30px 20px;
+            }
+
+            .welcome-greeting {
+                font-size: 1.8rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1rem;
+            }
+
+            .question-card {
+                padding: 25px 20px;
+            }
+
+            .question-title {
+                font-size: 1.3rem;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="complete_home_page.html" class="logo-main">JAS TRAINING</a>
+                <div class="logo-tagline">TRAIN • REMEMBER • PRACTICE</div>
+            </div>
+            <a href="tel:+447123456789" class="phone-cta">Call Joe: 07123 456 789</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section" id="welcomeSection">
+            <h1 class="welcome-greeting">Welcome <span class="name" id="userName">there</span>! 👋</h1>
+            <p class="welcome-subtitle">
+                Ready to discover your workplace safety compliance status?<br>
+                This 8-question assessment takes just 5 minutes and could save you from £20,000+ in HSE fines.
+            </p>
+            <button class="start-btn" onclick="startAssessment()">BEGIN MY SAFETY ASSESSMENT</button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container" id="progressSection">
+            <div class="progress-text" id="progressText">Question 1 of 8</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Question Section -->
+        <div id="questionsContainer"></div>
+    </div>
+
+    <script>
+        // Assessment questions data
+        const questions = [
+            {
+                id: 1,
+                category: "First Aid Coverage",
+                title: "Do you have trained first aiders for your current workforce?",
+                subtitle: "HSE requires 1 first aider per 50 low-risk workers, more for high-risk environments. Non-compliance can result in fines starting at £20,000.",
+                options: [
+                    { risk: "critical", title: "No trained first aiders", description: "Immediate compliance violation with potential for significant HSE penalties" },
+                    { risk: "warning", title: "Some trained, but unsure of ratios", description: "May be compliant but needs verification against current workforce size" },
+                    { risk: "good", title: "Fully compliant with current ratios", description: "Meeting legal requirements for your workforce size and risk level" }
+                ]
+            },
+            {
+                id: 2,
+                category: "Certificate Validity",
+                title: "Are all your first aid certificates currently valid?",
+                subtitle: "First aid certificates expire after 3 years. Expired certificates mean you're legally non-compliant.",
+                options: [
+                    { risk: "critical", title: "Certificates expired or missing", description: "Immediate non-compliance - staff are not legally qualified" },
+                    { risk: "warning", title: "Some expiring within 3 months", description: "Action needed soon to maintain compliance" },
+                    { risk: "good", title: "All certificates valid for 6+ months", description: "Good position with time to plan renewals" }
+                ]
+            },
+            {
+                id: 3,
+                category: "Emergency Equipment",
+                title: "Is your first aid equipment complete and in-date?",
+                subtitle: "HSE requires specific equipment based on workplace risks. Out-of-date supplies are a compliance failure.",
+                options: [
+                    { risk: "critical", title: "Equipment missing or expired", description: "Direct HSE violation - unable to provide adequate first aid" },
+                    { risk: "warning", title: "Have equipment but not recently checked", description: "Risk of expired items or gaps in provision" },
+                    { risk: "good", title: "Fully stocked and regularly checked", description: "Meeting HSE requirements with proper maintenance schedule" }
+                ]
+            },
+            {
+                id: 4,
+                category: "Mental Health Provision",
+                title: "Do you have Mental Health First Aiders (MHFA)?",
+                subtitle: "While not legally required, HSE strongly recommends MHFA provision. Many sectors now expect this as standard.",
+                options: [
+                    { risk: "warning", title: "No mental health provision", description: "Missing increasingly important workplace support" },
+                    { risk: "warning", title: "Considering implementation", description: "Aware of need but not yet actioned" },
+                    { risk: "good", title: "MHFA trained staff in place", description: "Providing comprehensive health support" }
+                ]
+            },
+            {
+                id: 5,
+                category: "Risk Assessment",
+                title: "When was your last first aid needs assessment?",
+                subtitle: "HSE requires regular assessment of first aid needs based on workplace hazards and changes.",
+                options: [
+                    { risk: "critical", title: "Over 12 months ago or never", description: "Likely non-compliant with current workplace needs" },
+                    { risk: "warning", title: "6-12 months ago", description: "May need updating based on workplace changes" },
+                    { risk: "good", title: "Within last 6 months", description: "Current and compliant with HSE expectations" }
+                ]
+            },
+            {
+                id: 6,
+                category: "High-Risk Activities",
+                title: "Do you conduct any high-risk activities?",
+                subtitle: "Construction, chemicals, machinery, or working at height require enhanced first aid provision.",
+                options: [
+                    { risk: "critical", title: "Yes, without specialist training", description: "Serious compliance gap for high-risk environments" },
+                    { risk: "warning", title: "Yes, with basic first aid only", description: "May need enhanced training for specific risks" },
+                    { risk: "good", title: "Yes, with appropriate specialist training", description: "Properly equipped for workplace hazards" }
+                ]
+            },
+            {
+                id: 7,
+                category: "Emergency Procedures",
+                title: "How confident are staff in emergency procedures?",
+                subtitle: "HSE expects all staff to know emergency procedures, not just first aiders.",
+                options: [
+                    { risk: "critical", title: "Most staff unsure what to do", description: "Major liability if emergency occurs" },
+                    { risk: "warning", title: "Some awareness but not practiced", description: "Knowledge gaps that could delay response" },
+                    { risk: "good", title: "Regular drills and high confidence", description: "Well-prepared workforce meeting HSE standards" }
+                ]
+            },
+            {
+                id: 8,
+                category: "Training Records",
+                title: "Are your training records complete and accessible?",
+                subtitle: "HSE inspectors require immediate access to training records. Missing records result in automatic non-compliance.",
+                options: [
+                    { risk: "critical", title: "Records missing or incomplete", description: "Cannot prove compliance to HSE inspector" },
+                    { risk: "warning", title: "Have records but poorly organised", description: "Risk of delays or gaps during inspection" },
+                    { risk: "good", title: "Complete digital records system", description: "Inspection-ready with full documentation" }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+        let userName = '';
+
+        // Load user name on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            userName = localStorage.getItem('firstName') || 'there';
+            document.getElementById('userName').textContent = userName;
+        });
+
+        function startAssessment() {
+            document.getElementById('welcomeSection').style.display = 'none';
+            document.getElementById('progressSection').style.display = 'block';
+            showQuestion(0);
+            
+            // Scroll to top of the page smoothly
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function showQuestion(index) {
+            const container = document.getElementById('questionsContainer');
+            const question = questions[index];
+            
+            // Update progress
+            document.getElementById('progressText').textContent = `Question ${index + 1} of ${questions.length}`;
+            document.getElementById('progressFill').style.width = `${((index + 1) / questions.length) * 100}%`;
+            
+            // Create question HTML
+            const questionHTML = `
+                <div class="question-card active" id="question-${index}">
+                    <div class="question-number">Question ${index + 1} • ${question.category}</div>
+                    <div class="question-title">${question.title}</div>
+                    <div class="question-subtitle">${question.subtitle}</div>
+                    
+                    <div class="options-container">
+                        ${question.options.map((option, i) => `
+                            <div class="option" onclick="selectOption(this, ${index}, '${option.risk}')">
+                                <div class="option-header">
+                                    <div class="option-icon risk-${option.risk}">
+                                        ${option.risk === 'critical' ? '!' : option.risk === 'warning' ? '?' : '✓'}
+                                    </div>
+                                    <div class="option-title">${option.title}</div>
+                                </div>
+                                <div class="option-description">${option.description}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn btn-secondary" onclick="previousQuestion()" ${index === 0 ? 'disabled' : ''}>
+                            Previous
+                        </button>
+                        <button class="btn btn-primary" disabled id="nextBtn-${index}" onclick="nextQuestion()">
+                            ${index === questions.length - 1 ? 'Complete Assessment' : 'Next Question'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = questionHTML;
+        }
+
+        function selectOption(element, questionIndex, riskLevel) {
+            // Clear previous selections
+            const options = element.parentNode.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Mark selected
+            element.classList.add('selected');
+            
+            // Store answer
+            answers[questionIndex] = {
+                question: questions[questionIndex].title,
+                risk: riskLevel,
+                category: questions[questionIndex].category
+            };
+            
+            // Enable next button
+            document.getElementById(`nextBtn-${questionIndex}`).disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion >= questions.length) {
+                completeAssessment();
+            } else {
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function completeAssessment() {
+            // Calculate results
+            const criticalCount = answers.filter(a => a.risk === 'critical').length;
+            const warningCount = answers.filter(a => a.risk === 'warning').length;
+            const goodCount = answers.filter(a => a.risk === 'good').length;
+            
+            let riskLevel = 'low';
+            if (criticalCount >= 2) {
+                riskLevel = 'critical';
+            } else if (criticalCount >= 1 || warningCount >= 3) {
+                riskLevel = 'high';
+            } else if (warningCount >= 1) {
+                riskLevel = 'medium';
+            }
+            
+            // Store results
+            const assessmentResults = {
+                userName: userName,
+                completedAt: new Date().toISOString(),
+                answers: answers,
+                score: {
+                    critical: criticalCount,
+                    warning: warningCount,
+                    good: goodCount
+                },
+                riskLevel: riskLevel,
+                complianceGaps: answers.filter(a => a.risk !== 'good').map(a => a.category),
+                immediateNeeds: answers.filter(a => a.risk === 'critical').map(a => a.category)
+            };
+            
+            localStorage.setItem('assessmentResults', JSON.stringify(assessmentResults));
+            
+            // Redirect to thank you page
+            window.location.href = 'thank-you.html';
+        }
+    </script>
+</body>
+</html>

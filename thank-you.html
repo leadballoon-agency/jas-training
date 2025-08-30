@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Safety Assessment Results - JAS Training</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #84D11E;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            color: #666;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Results Card */
+        .results-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 3px solid #84D11E;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #84D11E 0%, #6BB91A 100%);
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .results-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .results-subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Risk Assessment Box */
+        .risk-assessment {
+            background: #fef7f0;
+            border: 2px solid #fed7aa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .risk-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .risk-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #92400e;
+        }
+
+        .risk-badge {
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .risk-critical { background: #dc2626; }
+        .risk-high { background: #f59e0b; }
+        .risk-medium { background: #fbbf24; color: #78350f; }
+        .risk-low { background: #10b981; }
+
+        .risk-message {
+            text-align: center;
+            color: #92400e;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Score Breakdown */
+        .score-breakdown {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .score-item {
+            text-align: center;
+            flex: 1;
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .score-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .score-critical { color: #dc2626; }
+        .score-warning { color: #f59e0b; }
+        .score-good { color: #10b981; }
+
+        .score-label {
+            font-size: 0.85rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Compliance Gaps */
+        .compliance-gaps {
+            margin-bottom: 30px;
+        }
+
+        .gaps-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+        }
+
+        .gap-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-left: 4px solid #dc2626;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            color: #4b5563;
+            font-size: 0.95rem;
+        }
+
+        /* Lead Form */
+        .lead-form-card {
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lead-form-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(132, 209, 30, 0.1);
+            border-radius: 50%;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .form-subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Urgency Timer */
+        .urgency-box {
+            background: rgba(132, 209, 30, 0.15);
+            border: 2px solid rgba(132, 209, 30, 0.3);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .urgency-text {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .timer {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #84D11E;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .form-group select {
+            color: #2d3748;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #84D11E;
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-1px);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #84D11E, #6BB91A);
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 25px;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #6BB91A, #5aa517);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(132, 209, 30, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Trust Elements */
+        .trust-elements {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.85rem;
+        }
+
+        .trust-icon {
+            color: #84D11E;
+        }
+
+        /* Loading State */
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid #84D11E;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 640px) {
+            .results-card,
+            .lead-form-card {
+                padding: 25px 20px;
+            }
+
+            .results-title {
+                font-size: 1.6rem;
+            }
+
+            .score-breakdown {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .timer {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">JAS TRAINING</div>
+            <div class="tagline">TRAIN • REMEMBER • PRACTICE</div>
+        </header>
+
+        <!-- Results Card -->
+        <div class="results-card">
+            <div class="results-header">
+                <div class="results-icon" id="resultsIcon">⚠️</div>
+                <h1 class="results-title">Assessment Complete, <span id="userName">there</span>!</h1>
+                <p class="results-subtitle">Your workplace safety compliance report is ready</p>
+            </div>
+
+            <div class="risk-assessment">
+                <div class="risk-header">
+                    <span class="risk-label">Your Risk Level:</span>
+                    <span class="risk-badge" id="riskBadge">CALCULATING...</span>
+                </div>
+                <p class="risk-message" id="riskMessage">
+                    Analyzing your responses...
+                </p>
+            </div>
+
+            <div class="score-breakdown">
+                <div class="score-item">
+                    <span class="score-number score-critical" id="criticalCount">0</span>
+                    <span class="score-label">Critical Issues</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-number score-warning" id="warningCount">0</span>
+                    <span class="score-label">Warnings</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-number score-good" id="goodCount">0</span>
+                    <span class="score-label">Compliant Areas</span>
+                </div>
+            </div>
+
+            <div class="compliance-gaps" id="complianceGaps" style="display: none;">
+                <h3 class="gaps-title">⚡ Immediate Action Required:</h3>
+                <div id="gapsList"></div>
+            </div>
+        </div>
+
+        <!-- Lead Form Card -->
+        <div class="lead-form-card">
+            <div class="form-header">
+                <h2 class="form-title">Get Your Full Safety Report & Fix These Issues</h2>
+                <p class="form-subtitle">
+                    Joe will personally review your assessment and provide a tailoured action plan 
+                    to achieve full HSE compliance before your next inspection
+                </p>
+            </div>
+
+            <div class="urgency-box">
+                <p class="urgency-text">🎁 Limited Time Offer: Book within</p>
+                <div class="timer" id="countdown">23:59:47</div>
+                <p class="urgency-text">Get 10% OFF your first training session</p>
+            </div>
+
+            <form id="leadForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="07XXX XXXXXX">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" id="company" name="company" placeholder="Your Company Ltd">
+                    </div>
+                    <div class="form-group">
+                        <label for="employees">Number of Employees</label>
+                        <select id="employees" name="employees">
+                            <option value="">Select range</option>
+                            <option value="1-10">1-10</option>
+                            <option value="11-25">11-25</option>
+                            <option value="26-50">26-50</option>
+                            <option value="51-100">51-100</option>
+                            <option value="100+">100+</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="industry">Industry *</label>
+                    <select id="industry" name="industry" required>
+                        <option value="">Select your industry</option>
+                        <option value="construction">Construction</option>
+                        <option value="manufacturing">Manufacturing</option>
+                        <option value="offshore">Offshore/Energy</option>
+                        <option value="corporate">Corporate/Office</option>
+                        <option value="hospitality">Hospitality</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="retail">Retail</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    GET MY DETAILED REPORT & BOOK CONSULTATION
+                </button>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Generating your personalised safety plan...</p>
+                </div>
+            </form>
+
+            <div class="trust-elements">
+                <div class="trust-item">
+                    <span class="trust-icon">🔒</span>
+                    <span>100% Secure</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <span>GDPR Compliant</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">📞</span>
+                    <span>Joe will call within 24hrs</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include GHL Integration -->
+    <script src="ghl-integration.js"></script>
+
+    <script>
+        // Load assessment results
+        const results = JSON.parse(localStorage.getItem('assessmentResults') || '{}');
+        const userName = results.userName || localStorage.getItem('firstName') || 'there';
+
+        // Display user name
+        document.getElementById('userName').textContent = userName;
+
+        // Display results
+        function displayResults() {
+            if (!results.score) return;
+
+            // Update counts
+            document.getElementById('criticalCount').textContent = results.score.critical || 0;
+            document.getElementById('warningCount').textContent = results.score.warning || 0;
+            document.getElementById('goodCount').textContent = results.score.good || 0;
+
+            // Update risk level
+            const riskBadge = document.getElementById('riskBadge');
+            const riskMessage = document.getElementById('riskMessage');
+            const resultsIcon = document.getElementById('resultsIcon');
+
+            if (results.riskLevel === 'critical') {
+                riskBadge.className = 'risk-badge risk-critical';
+                riskBadge.textContent = 'CRITICAL RISK';
+                resultsIcon.textContent = '🚨';
+                riskMessage.innerHTML = `<strong>${userName}</strong>, your assessment revealed <strong>${results.score.critical} critical compliance gaps</strong> that could result in substantial HSE fines. <strong>Immediate action is required</strong> to protect your business.`;
+            } else if (results.riskLevel === 'high') {
+                riskBadge.className = 'risk-badge risk-high';
+                riskBadge.textContent = 'HIGH RISK';
+                resultsIcon.textContent = '⚠️';
+                riskMessage.innerHTML = `<strong>${userName}</strong>, we've identified <strong>${results.score.critical + results.score.warning} areas</strong> that need attention to ensure full HSE compliance. Let's address these before your next inspection.`;
+            } else if (results.riskLevel === 'medium') {
+                riskBadge.className = 'risk-badge risk-medium';
+                riskBadge.textContent = 'MEDIUM RISK';
+                resultsIcon.textContent = '⚡';
+                riskMessage.innerHTML = `<strong>${userName}</strong>, your safety provisions need improvement in <strong>${results.score.warning} areas</strong>. With some targeted training, you can achieve full compliance.`;
+            } else {
+                riskBadge.className = 'risk-badge risk-low';
+                riskBadge.textContent = 'GOOD STATUS';
+                resultsIcon.textContent = '✅';
+                riskMessage.innerHTML = `Well done <strong>${userName}</strong>! Your safety provisions are generally good, but there's always room for improvement. Let's ensure your team stays prepared for any emergency.`;
+            }
+
+            // Show compliance gaps
+            if (results.immediateNeeds && results.immediateNeeds.length > 0) {
+                document.getElementById('complianceGaps').style.display = 'block';
+                const gapsList = document.getElementById('gapsList');
+                gapsList.innerHTML = results.immediateNeeds.map(gap => 
+                    `<div class="gap-item">❌ ${gap}</div>`
+                ).join('');
+            }
+        }
+
+        // Countdown timer
+        function startCountdown() {
+            const endTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+            
+            const updateTimer = () => {
+                const now = new Date().getTime();
+                const distance = endTime - now;
+                
+                if (distance < 0) {
+                    document.getElementById('countdown').textContent = "EXPIRED";
+                    return;
+                }
+                
+                const hours = Math.floor(distance / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById('countdown').textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            };
+            
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        // Form submission
+        document.getElementById('leadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            
+            // Show loading
+            submitBtn.disabled = true;
+            loading.classList.add('active');
+            
+            // Gather form data
+            const formData = new FormData(this);
+            const leadData = {
+                firstName: userName,
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                company: formData.get('company'),
+                employees: formData.get('employees'),
+                industry: formData.get('industry'),
+                ...results
+            };
+            
+            // Send to GHL if integration exists
+            if (window.GHLIntegration) {
+                try {
+                    await window.GHLIntegration.completeLeadCapture(leadData);
+                } catch (error) {
+                    console.error('GHL submission error:', error);
+                }
+            }
+            
+            // Show success (in real implementation, redirect to booking page)
+            setTimeout(() => {
+                loading.innerHTML = `
+                    <div style="color: #10b981; font-size: 3rem;">✅</div>
+                    <p style="color: white; font-size: 1.2rem; font-weight: 600; margin-top: 16px;">
+                        Thank you ${userName}!
+                    </p>
+                    <p style="color: rgba(255,255,255,0.9); margin-top: 12px;">
+                        Your detailed safety report has been generated.<br>
+                        Joe will call you within 24 hours to discuss your training needs.
+                    </p>
+                    <p style="color: #84D11E; font-weight: 600; margin-top: 20px;">
+                        Check your email for your full report
+                    </p>
+                `;
+            }, 2000);
+        });
+
+        // Initialize on load
+        displayResults();
+        startCountdown();
+    </script>
+</body>
+</html>
