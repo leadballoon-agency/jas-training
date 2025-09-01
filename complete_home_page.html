@@ -1364,6 +1364,115 @@
             transform: translateY(-2px);
         }
 
+        /* Calendar Modal Styles */
+        .calendar-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .calendar-modal-content {
+            background: #ffffff;
+            width: 90%;
+            max-width: 900px;
+            height: 85vh;
+            max-height: 700px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .calendar-modal-header {
+            padding: 25px 30px;
+            background: linear-gradient(135deg, #84D11E 0%, #6fb319 100%);
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .calendar-modal-header h2 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .close-modal {
+            color: white;
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            line-height: 1;
+            transition: transform 0.3s ease;
+            padding: 0 5px;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .calendar-modal-body {
+            flex: 1;
+            padding: 20px;
+            overflow: hidden;
+            border-radius: 0 0 20px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .calendar-modal-content {
+                width: 95%;
+                height: 90vh;
+                max-height: none;
+                border-radius: 15px;
+            }
+
+            .calendar-modal-header {
+                padding: 20px;
+                border-radius: 15px 15px 0 0;
+            }
+
+            .calendar-modal-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .close-modal {
+                font-size: 28px;
+            }
+
+            .calendar-modal-body {
+                padding: 10px;
+            }
+        }
+
         /* Footer */
         .footer {
             background: #2d3748;
@@ -1861,7 +1970,7 @@
                         <li><a href="#contact">Contact</a></li>
                     </nav>
                     <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
-                    <a href="tel:+447123456789" class="phone-cta">Call Joe: 07123 456 789</a>
+                    <a href="javascript:void(0)" onclick="openCalendarModal()" class="phone-cta">Book Training</a>
                 </div>
             </div>
             <div class="mobile-menu" id="mobileMenu">
@@ -2202,7 +2311,7 @@
                     </div>
                     
                     <div class="pricing-cta">
-                        <a href="tel:+447123456789" class="btn-pricing-primary">Book Training Now</a>
+                        <a href="javascript:void(0)" onclick="openCalendarModal()" class="btn-pricing-primary">Book Training Now</a>
                         <a href="#leadSection" class="btn-pricing-secondary">Start Free Assessment First</a>
                     </div>
                 </div>
@@ -2250,7 +2359,7 @@
                 
                 <div class="cta-buttons">
                     <a href="#leadSection" class="btn-primary">Start Assessment Now</a>
-                    <a href="tel:+447123456789" class="btn-secondary">Call Joe Direct</a>
+                    <a href="javascript:void(0)" onclick="openCalendarModal()" class="btn-secondary">Book with Joe</a>
                 </div>
             </div>
         </div>
@@ -2394,6 +2503,51 @@
             floatingElements.forEach(el => {
                 el.classList.add('floating');
             });
+        });
+    </script>
+
+    <!-- Calendar Modal -->
+    <div id="calendarModal" class="calendar-modal">
+        <div class="calendar-modal-content">
+            <div class="calendar-modal-header">
+                <h2>Book Your Training with Joe</h2>
+                <span class="close-modal" onclick="closeCalendarModal()">&times;</span>
+            </div>
+            <div class="calendar-modal-body">
+                <iframe src="https://link.leadballoon.co.uk/widget/booking/YxE6ZP9Dfmj499WUt2tj" 
+                        style="width: 100%; height: 100%; border:none; overflow: hidden;" 
+                        scrolling="no" 
+                        id="YxE6ZP9Dfmj499WUt2tj_1756578964132"></iframe>
+            </div>
+        </div>
+    </div>
+    <script src="https://link.leadballoon.co.uk/js/form_embed.js" type="text/javascript"></script>
+
+    <script>
+        // Calendar Modal Functions
+        function openCalendarModal() {
+            document.getElementById('calendarModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCalendarModal() {
+            document.getElementById('calendarModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('calendarModal');
+            if (event.target == modal) {
+                closeCalendarModal();
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeCalendarModal();
+            }
         });
     </script>
 </body>
