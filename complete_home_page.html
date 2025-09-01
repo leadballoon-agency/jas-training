@@ -1384,6 +1384,154 @@
             transform: translateY(-2px);
         }
 
+        /* Elite Training Modal Styles */
+        .elite-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .elite-modal-content {
+            background: #ffffff;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+
+        .elite-modal-header {
+            padding: 25px 30px;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .elite-modal-header h2 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .close-elite-modal {
+            color: white;
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            line-height: 1;
+            transition: transform 0.3s ease;
+            padding: 0 5px;
+        }
+
+        .close-elite-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .elite-modal-body {
+            padding: 30px;
+        }
+
+        .elite-modal-intro {
+            color: #4a5568;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #84D11E;
+        }
+
+        .elite-submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #84D11E 0%, #6fb319 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .elite-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(132, 209, 30, 0.3);
+        }
+
+        .elite-success {
+            text-align: center;
+            padding: 30px;
+            background: #f0fdf4;
+            border-radius: 12px;
+            border: 2px solid #84D11E;
+        }
+
+        .elite-success h3 {
+            color: #22c55e;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .elite-success p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .elite-modal-content {
+                width: 95%;
+                margin: 20px;
+            }
+
+            .elite-modal-body {
+                padding: 20px;
+            }
+        }
+
         /* Calendar Modal Styles */
         .calendar-modal {
             display: none;
@@ -2282,7 +2430,7 @@
                     <div class="elite-badge">⭐ COMING SOON</div>
                     <h3>Looking for Specialised High-Risk Training?</h3>
                     <p>Joe will soon offer premium military-grade training for offshore energy, emergency services, and other high-risk industries with specialised protocols and advanced certifications.</p>
-                    <a href="#leadSection" class="elite-cta-btn">Register Your Interest →</a>
+                    <a href="javascript:void(0)" onclick="openEliteModal()" class="elite-cta-btn">Register Your Interest →</a>
                 </div>
             </div>
         </div>
@@ -2542,6 +2690,65 @@
         });
     </script>
 
+    <!-- Email Capture Modal for Elite Training -->
+    <div id="eliteModal" class="elite-modal">
+        <div class="elite-modal-content">
+            <div class="elite-modal-header">
+                <h2>Register Your Interest in Elite Training</h2>
+                <span class="close-elite-modal" onclick="closeEliteModal()">&times;</span>
+            </div>
+            <div class="elite-modal-body">
+                <p class="elite-modal-intro">Be the first to know when our specialized high-risk training becomes available. Perfect for offshore energy, emergency services, and military contractors.</p>
+                
+                <form id="eliteInterestForm" onsubmit="submitEliteForm(event)">
+                    <div class="form-group">
+                        <label for="eliteName">Full Name *</label>
+                        <input type="text" id="eliteName" name="name" required placeholder="John Smith">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eliteEmail">Email Address *</label>
+                        <input type="email" id="eliteEmail" name="email" required placeholder="john@company.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="elitePhone">Phone Number</label>
+                        <input type="tel" id="elitePhone" name="phone" placeholder="07123 456 789">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eliteCompany">Company/Organisation</label>
+                        <input type="text" id="eliteCompany" name="company" placeholder="Your company name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eliteInterest">Training Interest</label>
+                        <select id="eliteInterest" name="interest">
+                            <option value="">Select your primary interest</option>
+                            <option value="offshore">Offshore Energy & Marine</option>
+                            <option value="emergency">Emergency Services</option>
+                            <option value="military">Military/Defence Contractors</option>
+                            <option value="industrial">High-Risk Industrial</option>
+                            <option value="other">Other Specialized Training</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eliteMessage">Additional Information</label>
+                        <textarea id="eliteMessage" name="message" rows="3" placeholder="Tell us about your specific training needs..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="elite-submit-btn">Register My Interest</button>
+                </form>
+                
+                <div id="eliteSuccessMessage" class="elite-success" style="display: none;">
+                    <h3>✓ Thank You for Registering!</h3>
+                    <p>We've received your interest in our Elite Training programs. Joe will personally contact you when these specialized courses become available.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Calendar Modal -->
     <div id="calendarModal" class="calendar-modal">
         <div class="calendar-modal-content">
@@ -2583,6 +2790,73 @@
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeCalendarModal();
+                closeEliteModal();
+            }
+        });
+
+        // Elite Modal Functions
+        function openEliteModal() {
+            document.getElementById('eliteModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEliteModal() {
+            document.getElementById('eliteModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function submitEliteForm(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Add form type identifier
+            data.formType = 'elite_training_interest';
+            data.timestamp = new Date().toISOString();
+            
+            // Send to GHL webhook (replace with your actual webhook URL)
+            // TODO: Replace with your GHL webhook URL
+            const webhookUrl = 'YOUR_GHL_WEBHOOK_URL_HERE';
+            
+            // Uncomment this when you have your webhook URL
+            /*
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                console.log('Webhook response:', response);
+            }).catch(error => {
+                console.error('Webhook error:', error);
+            });
+            */
+            
+            // Log to console for testing
+            console.log('Elite Training Interest:', data);
+            console.log('Ready to send to webhook:', webhookUrl);
+            
+            // Hide form and show success message
+            document.getElementById('eliteInterestForm').style.display = 'none';
+            document.getElementById('eliteSuccessMessage').style.display = 'block';
+            
+            // Close modal after 3 seconds
+            setTimeout(() => {
+                closeEliteModal();
+                // Reset form for next use
+                document.getElementById('eliteInterestForm').reset();
+                document.getElementById('eliteInterestForm').style.display = 'block';
+                document.getElementById('eliteSuccessMessage').style.display = 'none';
+            }, 3000);
+        }
+
+        // Close elite modal when clicking outside
+        document.getElementById('eliteModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeEliteModal();
             }
         });
     </script>
