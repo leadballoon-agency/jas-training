@@ -2423,34 +2423,19 @@
         });
 
         // Show/hide navbar on scroll
-        let lastScrollTop = 0;
-        let scrollTimer = null;
         const header = document.querySelector('.header');
         
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
-            // Show header after scrolling 100px
-            if (scrollTop > 100) {
+            // Show header after scrolling down from top, hide when back at top
+            if (scrollTop > 50) {
                 header.classList.add('visible');
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('visible');
                 header.classList.remove('scrolled');
             }
-            
-            // Hide header when scrolling down, show when scrolling up
-            if (scrollTop > lastScrollTop && scrollTop > 200) {
-                // Scrolling down
-                header.classList.remove('visible');
-            } else {
-                // Scrolling up
-                if (scrollTop > 100) {
-                    header.classList.add('visible');
-                }
-            }
-            
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         }, false);
 
         // Video play functionality
