@@ -5,7 +5,7 @@
 **Primary Text:**
 Last month, a Cardiff company was fined £1.2M for safety breaches that could have been prevented with proper training.
 
-Royal Engineer Commando Joe Sims has trained 500+ Welsh businesses to avoid these devastating penalties. His military-grade safety assessments identify compliance gaps before HSE inspectors do.
+Reservist Regimental Sergeant Major Joe Sims has trained 500+ Welsh businesses to avoid these devastating penalties. His military-grade safety assessments identify compliance gaps before HSE inspectors do.
 
 Take our FREE 5-minute assessment to see if you're at risk.
 
@@ -19,7 +19,7 @@ Take our FREE 5-minute assessment to see if you're at risk.
 **Primary Text:**
 "We were 48 hours from an HSE inspection when Joe arrived. He identified 17 critical violations we'd missed completely. His rapid intervention training for our team literally saved us from closure." - Mark Davies, Construction Director
 
-Join 500+ Welsh businesses who trust ex-Royal Engineer Joe Sims for their safety training.
+Join 500+ Welsh businesses who trust Reservist Regimental Sergeant Major Joe Sims for their safety training.
 
 ✅ Same-day emergency training available
 ✅ 100% pass rate on assessments
@@ -55,10 +55,10 @@ FREE safety assessment included (worth £299)
 **Primary Text:**
 No qualified first aider = Business shut down by HSE.
 
-Don't panic. Joe from JAS Training offers emergency same-day certification across Wales. Ex-Royal Engineer with 15 years training elite military units.
+Don't panic. Joe from JAS Training offers emergency same-day certification across Wales. Reservist Regimental Sergeant Major with 15 years training elite military units.
 
 Get your team certified TODAY:
-📞 Call: 07123 456 789
+📞 Call: 07782 218 226
 💻 Book online in 30 seconds
 ✅ Instant HSE-approved certificates
 
@@ -74,7 +74,7 @@ Get your team certified TODAY:
 **Primary Text:**
 Discover the 7 hidden safety violations that cost Welsh businesses £3.2M in fines last year.
 
-Ex-Royal Engineer Commando Joe Sims reveals:
+Ex-Reservist Regimental Sergeant Major Joe Sims reveals:
 • The £50K kitchen violation 90% of businesses have
 • Why your fire exits could cost you £100K
 • The first aid mistake that shut down 3 Cardiff companies
@@ -141,7 +141,7 @@ The difference?
 ❌ They have sales teams (you pay for)
 ❌ They have shareholders (you pay for)
 
-✅ We have Joe - Ex-military, 15 years experience, no nonsense.
+✅ We have Joe - Reservist Regimental Sergeant Major, 15 years experience, no nonsense.
 
 Same certification. Better training. Welsh prices.
 
