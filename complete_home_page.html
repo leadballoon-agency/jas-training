@@ -27,13 +27,28 @@
 
         /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             padding: 20px 0;
-            position: sticky;
-            top: 0;
+            position: fixed;
+            top: -100px;
+            left: 0;
+            right: 0;
             z-index: 1000;
+            transition: top 0.3s ease, background 0.3s ease;
+        }
+
+        .header.visible {
+            top: 0;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         .header-content {
@@ -134,9 +149,11 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
         }
 
         .mobile-menu.active {
@@ -157,7 +174,10 @@
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-            padding: 100px 0 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 80px 0;
             position: relative;
             overflow: hidden;
         }
@@ -1504,7 +1524,8 @@
             }
 
             .hero {
-                padding: 50px 0 40px;
+                min-height: 100vh;
+                padding: 60px 0;
             }
 
             .hero-grid {
@@ -1879,7 +1900,8 @@
             }
 
             .hero {
-                padding: 40px 0 30px;
+                min-height: 100vh;
+                padding: 40px 0;
             }
 
             .hero-video {
@@ -1966,7 +1988,6 @@
                 <div class="nav-container">
                     <nav class="nav-menu">
                         <li><a href="complete_home_page.html" class="active">Home</a></li>
-                        <li><a href="assessment-clean.html">Assessment</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </nav>
                     <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
@@ -1976,7 +1997,6 @@
             <div class="mobile-menu" id="mobileMenu">
                 <nav class="nav-menu">
                     <li><a href="complete_home_page.html" class="active">Home</a></li>
-                    <li><a href="assessment-clean.html">Assessment</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </nav>
             </div>
@@ -2401,6 +2421,37 @@
                 document.getElementById('mobileMenu').classList.remove('active');
             });
         });
+
+        // Show/hide navbar on scroll
+        let lastScrollTop = 0;
+        let scrollTimer = null;
+        const header = document.querySelector('.header');
+        
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Show header after scrolling 100px
+            if (scrollTop > 100) {
+                header.classList.add('visible');
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('visible');
+                header.classList.remove('scrolled');
+            }
+            
+            // Hide header when scrolling down, show when scrolling up
+            if (scrollTop > lastScrollTop && scrollTop > 200) {
+                // Scrolling down
+                header.classList.remove('visible');
+            } else {
+                // Scrolling up
+                if (scrollTop > 100) {
+                    header.classList.add('visible');
+                }
+            }
+            
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, false);
 
         // Video play functionality
         function playVideo(button) {
