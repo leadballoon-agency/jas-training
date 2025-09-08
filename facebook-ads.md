@@ -10,7 +10,7 @@ Reservist Regimental Sergeant Major Joe Sims has trained 500+ Welsh businesses t
 Take our FREE 5-minute assessment to see if you're at risk.
 
 **CTA:** Learn More
-**Link:** https://leadballoon-agency.github.io/jas-training/
+**Link:** https://joesimstraining.co.uk/
 
 ---
 
@@ -26,7 +26,7 @@ Join 500+ Welsh businesses who trust Reservist Regimental Sergeant Major Joe Sim
 ✅ HSE approved certifications
 
 **CTA:** Book Now
-**Link:** https://leadballoon-agency.github.io/jas-training/
+**Link:** https://joesimstraining.co.uk/
 
 ---
 
@@ -46,7 +46,7 @@ Military safety expert Joe Sims will get your team certified in just 1 day:
 FREE safety assessment included (worth £299)
 
 **CTA:** Get Instant Quote
-**Link:** https://leadballoon-agency.github.io/jas-training/
+**Link:** https://joesimstraining.co.uk/
 
 ---
 
@@ -65,7 +65,7 @@ Get your team certified TODAY:
 "Joe saved us when our first aider left without notice. Had 3 staff certified by lunchtime!" - Sarah, Newport
 
 **CTA:** Book Emergency Training
-**Link:** https://leadballoon-agency.github.io/jas-training/
+**Link:** https://joesimstraining.co.uk/
 
 ---
 
@@ -84,7 +84,7 @@ Get your FREE assessment (takes 5 minutes, could save £000s)
 No sales pressure. Just military-precision safety insights.
 
 **CTA:** Start Free Assessment
-**Link:** https://leadballoon-agency.github.io/jas-training/
+**Link:** https://joesimstraining.co.uk/
 
 ---
 
@@ -103,7 +103,7 @@ Special offer for businesses who visited our site:
 Let's protect your business. Takes 1 day. Lasts 3 years.
 
 **CTA:** Claim 20% Discount
-**Link:** https://leadballoon-agency.github.io/jas-training/
+**Link:** https://joesimstraining.co.uk/
 
 ---
 
@@ -125,7 +125,7 @@ Trained the teams at:
 Your local safety expert. Military trained. HSE approved.
 
 **CTA:** Get Group Quote
-**Link:** https://leadballoon-agency.github.io/jas-training/
+**Link:** https://joesimstraining.co.uk/
 
 ---
 
@@ -146,7 +146,7 @@ The difference?
 Same certification. Better training. Welsh prices.
 
 **CTA:** Compare Prices
-**Link:** https://leadballoon-agency.github.io/jas-training/
+**Link:** https://joesimstraining.co.uk/
 
 ---
 
