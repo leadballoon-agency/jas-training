@@ -2591,38 +2591,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Additional Services -->
-            <div class="additional-services">
-                <h3>Additional Specialised Training Available</h3>
-                <div class="services-grid">
-                    <div class="service-item">
-                        <span class="service-icon">🧠</span>
-                        <span>Mental Health First Aid (MHFA)</span>
-                    </div>
-                    <div class="service-item">
-                        <span class="service-icon">⚡</span>
-                        <span>Offshore Energy Certification</span>
-                    </div>
-                    <div class="service-item">
-                        <span class="service-icon">🏗️</span>
-                        <span>Advanced Trauma Response</span>
-                    </div>
-                    <div class="service-item">
-                        <span class="service-icon">🔥</span>
-                        <span>Fire Safety & Evacuation</span>
-                    </div>
-                    <div class="service-item">
-                        <span class="service-icon">📋</span>
-                        <span>Risk Assessment Training</span>
-                    </div>
-                    <div class="service-item">
-                        <span class="service-icon">🎯</span>
-                        <span>Custom Industry Packages</span>
-                    </div>
-                </div>
-                <p class="services-note">Contact Joe for specialised training pricing and availability</p>
-            </div>
         </div>
     </section>
 
@@ -2850,7 +2818,7 @@
                 
                 <div id="eliteSuccessMessage" class="elite-success" style="display: none;">
                     <h3>✓ Thank You for Registering!</h3>
-                    <p>We've received your interest in our Elite Training programs. Joe will personally contact you when these specialized courses become available.</p>
+                    <p>Redirecting you to our Elite Training programs page...</p>
                 </div>
             </div>
         </div>
@@ -2950,14 +2918,10 @@
             document.getElementById('eliteInterestForm').style.display = 'none';
             document.getElementById('eliteSuccessMessage').style.display = 'block';
             
-            // Close modal after 3 seconds
+            // Redirect to elite page after 2 seconds
             setTimeout(() => {
-                closeEliteModal();
-                // Reset form for next use
-                document.getElementById('eliteInterestForm').reset();
-                document.getElementById('eliteInterestForm').style.display = 'block';
-                document.getElementById('eliteSuccessMessage').style.display = 'none';
-            }, 3000);
+                window.location.href = 'elite_page_updated.html';
+            }, 2000);
         }
 
         // Close elite modal when clicking outside
