@@ -267,8 +267,7 @@
             font-size: 0.95rem;
         }
 
-        .form-group input,
-        .form-group select {
+        .form-group input {
             width: 100%;
             padding: 14px;
             border: 2px solid rgba(255,255,255,0.2);
@@ -283,17 +282,99 @@
             color: rgba(255,255,255,0.6);
         }
 
-        .form-group select {
-            color: #2d3748;
-            background: white;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
+        .form-group input:focus {
             outline: none;
             border-color: #84D11E;
-            background: rgba(255,255,255,0.2);
+            background-color: rgba(255,255,255,0.15);
             transform: translateY(-1px);
+        }
+
+        /* Custom dropdown styles */
+        .custom-select {
+            position: relative;
+            width: 100%;
+            cursor: pointer;
+            margin-bottom: 15px;
+            z-index: 1;
+        }
+
+        /* Add extra space when dropdown is open */
+        .custom-select.open {
+            margin-bottom: 200px;
+            z-index: 10000;
+        }
+
+        .select-display {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-right: 40px;
+        }
+
+        .select-display::after {
+            content: '▼';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 0.8rem;
+            pointer-events: none;
+        }
+
+        .custom-select.open .select-display::after {
+            content: '▲';
+        }
+
+        .dropdown-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgb(26, 26, 26);
+            background-color: rgb(26, 26, 26);
+            border: 2px solid #84D11E;
+            border-radius: 8px;
+            margin-top: 4px;
+            z-index: 10001;
+            max-height: 250px;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,1);
+            isolation: isolate;
+        }
+
+        .custom-select.open .dropdown-options {
+            display: block;
+        }
+
+        .dropdown-option {
+            padding: 14px;
+            color: white;
+            font-size: 1rem;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: #1a1a1a;
+            position: relative;
+            z-index: 10000;
+        }
+
+        .dropdown-option:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-option:hover {
+            background: #2a2a2a;
+        }
+
+        .dropdown-option:active {
+            background: #333333;
         }
 
         .form-row {
@@ -416,6 +497,29 @@
             .timer {
                 font-size: 1.4rem;
             }
+
+            /* Fix input and custom dropdowns on mobile */
+            .form-group input,
+            .select-display {
+                font-size: 16px !important; /* Prevents zoom on iOS */
+                padding: 16px !important;
+                min-height: 54px;
+            }
+
+            .form-group label {
+                font-size: 0.95rem;
+                margin-bottom: 10px;
+            }
+
+            .dropdown-option {
+                padding: 18px !important;
+                font-size: 16px !important;
+            }
+
+            .dropdown-options {
+                max-height: 300px;
+                border-width: 3px;
+            }
         }
     </style>
 </head>
@@ -500,30 +604,36 @@
                     </div>
                     <div class="form-group">
                         <label for="employees">Number of Employees</label>
-                        <select id="employees" name="employees">
-                            <option value="">Select range</option>
-                            <option value="1-10">1-10</option>
-                            <option value="11-25">11-25</option>
-                            <option value="26-50">26-50</option>
-                            <option value="51-100">51-100</option>
-                            <option value="100+">100+</option>
-                        </select>
+                        <div class="custom-select" onclick="toggleDropdown('employees')">
+                            <input type="hidden" id="employees" name="employees" value="">
+                            <div class="select-display" id="employees-display">Select range</div>
+                            <div class="dropdown-options" id="employees-options">
+                                <div class="dropdown-option" onclick="selectOption('employees', '1-10', '1-10')">1-10</div>
+                                <div class="dropdown-option" onclick="selectOption('employees', '11-25', '11-25')">11-25</div>
+                                <div class="dropdown-option" onclick="selectOption('employees', '26-50', '26-50')">26-50</div>
+                                <div class="dropdown-option" onclick="selectOption('employees', '51-100', '51-100')">51-100</div>
+                                <div class="dropdown-option" onclick="selectOption('employees', '100+', '100+')">100+</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="industry">Industry *</label>
-                    <select id="industry" name="industry" required>
-                        <option value="">Select your industry</option>
-                        <option value="construction">Construction</option>
-                        <option value="manufacturing">Manufacturing</option>
-                        <option value="offshore">Offshore/Energy</option>
-                        <option value="corporate">Corporate/Office</option>
-                        <option value="hospitality">Hospitality</option>
-                        <option value="healthcare">Healthcare</option>
-                        <option value="retail">Retail</option>
-                        <option value="other">Other</option>
-                    </select>
+                    <div class="custom-select" onclick="toggleDropdown('industry')">
+                        <input type="hidden" id="industry" name="industry" value="" required>
+                        <div class="select-display" id="industry-display">Select your industry</div>
+                        <div class="dropdown-options" id="industry-options">
+                            <div class="dropdown-option" onclick="selectOption('industry', 'construction', 'Construction')">Construction</div>
+                            <div class="dropdown-option" onclick="selectOption('industry', 'manufacturing', 'Manufacturing')">Manufacturing</div>
+                            <div class="dropdown-option" onclick="selectOption('industry', 'offshore', 'Offshore/Energy')">Offshore/Energy</div>
+                            <div class="dropdown-option" onclick="selectOption('industry', 'corporate', 'Corporate/Office')">Corporate/Office</div>
+                            <div class="dropdown-option" onclick="selectOption('industry', 'hospitality', 'Hospitality')">Hospitality</div>
+                            <div class="dropdown-option" onclick="selectOption('industry', 'healthcare', 'Healthcare')">Healthcare</div>
+                            <div class="dropdown-option" onclick="selectOption('industry', 'retail', 'Retail')">Retail</div>
+                            <div class="dropdown-option" onclick="selectOption('industry', 'other', 'Other')">Other</div>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" class="submit-btn" id="submitBtn">
@@ -557,6 +667,42 @@
     <script src="ghl-integration.js"></script>
 
     <script>
+        // Custom dropdown functions
+        function toggleDropdown(id) {
+            event.stopPropagation();
+            const dropdown = event.currentTarget;
+
+            // Close all other dropdowns
+            document.querySelectorAll('.custom-select').forEach(select => {
+                if (select !== dropdown) {
+                    select.classList.remove('open');
+                }
+            });
+
+            // Toggle current dropdown
+            dropdown.classList.toggle('open');
+        }
+
+        function selectOption(fieldId, value, display) {
+            event.stopPropagation();
+
+            // Set the hidden input value
+            document.getElementById(fieldId).value = value;
+
+            // Update the display
+            document.getElementById(fieldId + '-display').textContent = display;
+
+            // Close the dropdown
+            event.currentTarget.closest('.custom-select').classList.remove('open');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.custom-select').forEach(select => {
+                select.classList.remove('open');
+            });
+        });
+
         // Load assessment results
         const results = JSON.parse(localStorage.getItem('assessmentResults') || '{}');
         const userName = results.userName || localStorage.getItem('firstName') || 'there';

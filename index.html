@@ -41,8 +41,9 @@
         "@type": "EducationalOrganization",
         "name": "JAS Training Wales",
         "alternateName": "JAS Training Solutions Ltd",
-        "url": "https://joesimstraining.co.uk/",
-        "logo": "https://joesimstraining.co.uk/logo.png",
+        "url": "https://jas-training.co.uk",
+        "sameAs": ["https://joesimstraining.co.uk"],
+        "logo": "https://joesimstraining.co.uk/og-image.png",
         "description": "Professional first aid and workplace safety training across Wales. Military-grade training by Reservist Regimental Sergeant Major Joe Sims.",
         "address": {
             "@type": "PostalAddress",
@@ -52,7 +53,7 @@
         },
         "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": "+44-7782-218-226",
+            "telephone": "+44-7427-816-007",
             "contactType": "customer service",
             "areaServed": "GB-WLS",
             "availableLanguage": "en"
@@ -2619,7 +2620,7 @@
                     Professional first aid and safety training across the UK
                 </p>
                 <p style="color: #cbd5e0; font-size: 0.9rem; margin-bottom: 16px;">
-                    📧 joe@jastraining.co.uk | 📞 07782 218 226
+                    📧 joe@jastraining.co.uk | 📞 07427 816 007
                 </p>
                 <p style="color: #9ca3af; font-size: 0.875rem; margin-bottom: 8px;">
                     &copy; 2025 JAS Training Solutions Ltd. All rights reserved. | <a href="privacy.html" style="color: #84D11E; text-decoration: none;">Privacy Policy</a>
@@ -2630,6 +2631,22 @@
             </div>
         </div>
     </footer>
+
+    <!-- Facebook Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+
+        // Facebook Pixel ID for Joe's campaign
+        fbq('init', '1279358166934984');
+        fbq('track', 'PageView');
+    </script>
 
     <script>
         // Mobile menu toggle
@@ -2691,10 +2708,18 @@
             
             // Store first name for assessment page
             localStorage.setItem('firstName', firstName.trim());
-            
+
+            // Track Facebook Pixel Lead event
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Lead', {
+                    content_name: 'Safety Assessment Started',
+                    content_category: 'assessment'
+                });
+            }
+
             // Redirect to assessment page
             window.location.href = 'assessment-clean.html';
-            
+
             // Track conversion
             console.log('Assessment started by:', firstName);
         });

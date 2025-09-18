@@ -2,13 +2,13 @@
 // This handles all lead capture and sends data to GHL
 
 const GHL_CONFIG = {
-    // Replace with your actual GHL webhook URL
-    webhookUrl: 'https://services.leadconnectorhq.com/hooks/WEBHOOK_ID/webhook-trigger/TRIGGER_ID',
-    
+    // GHL webhook URL for Joe's campaign
+    webhookUrl: 'https://services.leadconnectorhq.com/hooks/Mc5OUt3PKkpQtOUfUjk3/webhook-trigger/4637995f-8a5e-4481-ac6a-4a63fb14717d',
+
     // Optional: Add your location/campaign IDs
     locationId: '',
     campaignId: '',
-    
+
     // Tags to add to leads
     tags: ['JAS Training', 'Safety Assessment', 'Facebook Ads']
 };
@@ -65,7 +65,41 @@ async function completeLeadCapture(assessmentData) {
 // Send data to GoHighLevel webhook
 async function sendToGHL(leadData) {
     try {
-        // Format data for GHL webhook
+        // Create formatted notes with all assessment data
+        const assessmentNotes = `
+=== JAS TRAINING SAFETY ASSESSMENT RESULTS ===
+Date: ${new Date().toLocaleString('en-GB')}
+
+CONTACT DETAILS:
+• Name: ${leadData.firstName || 'Not provided'}
+• Email: ${leadData.email || 'Not provided'}
+• Phone: ${leadData.phone || 'Not provided'}
+• Company: ${leadData.company || 'Not provided'}
+• Industry: ${leadData.industry || 'Not provided'}
+• Employees: ${leadData.employees || 'Not provided'}
+
+ASSESSMENT RESULTS:
+• Risk Level: ${leadData.customFields?.risk_level || 'Not assessed'}
+• Assessment Score: ${leadData.customFields?.assessment_score || '0'}
+• Compliance Gaps: ${leadData.customFields?.compliance_gaps || 'None identified'}
+• Immediate Needs: ${leadData.customFields?.immediate_needs || 'None identified'}
+
+LEAD SOURCE:
+• Source: ${leadData.customFields?.utm_source || 'Direct'}
+• Medium: ${leadData.customFields?.utm_medium || 'Website'}
+• Campaign: ${leadData.customFields?.utm_campaign || 'None'}
+• FB Click ID: ${leadData.customFields?.fbclid || 'None'}
+
+ESTIMATED VALUE: £${leadData.customFields?.estimated_value || '0'}
+
+NEXT STEPS:
+1. Call within 24 hours (Risk Level: ${leadData.customFields?.risk_level})
+2. Review compliance gaps
+3. Prepare training quote
+4. Book consultation
+        `.trim();
+
+        // Format data for GHL webhook - simplified version
         const ghlPayload = {
             first_name: leadData.firstName || '',
             last_name: leadData.lastName || '',
@@ -73,18 +107,7 @@ async function sendToGHL(leadData) {
             phone: leadData.phone || '',
             tags: leadData.tags || [],
             source: leadData.source || 'JAS Training Website',
-            
-            // Custom fields mapping (adjust based on your GHL setup)
-            customField: {
-                company: leadData.company || '',
-                industry: leadData.industry || '',
-                assessment_score: leadData.customFields?.assessment_score || '',
-                risk_level: leadData.customFields?.risk_level || '',
-                utm_source: leadData.customFields?.utm_source || '',
-                utm_medium: leadData.customFields?.utm_medium || '',
-                utm_campaign: leadData.customFields?.utm_campaign || '',
-                fbclid: leadData.customFields?.fbclid || ''
-            }
+            notes: assessmentNotes
         };
 
         // Add location ID if configured

@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safety Assessment - JAS Training</title>
+    <title>Workplace Safety Assessment | JAS Training Wales</title>
+    <meta name="description" content="Complete your FREE workplace safety assessment to identify critical compliance gaps. Get your personalized safety report from JAS Training Wales.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://joesimstraining.co.uk/assessment-clean.html">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Workplace Safety Assessment | JAS Training Wales">
+    <meta property="og:description" content="Complete your safety assessment to identify compliance gaps and get personalized recommendations.">
+    <meta property="og:url" content="https://joesimstraining.co.uk/assessment-clean.html">
+    <meta property="og:type" content="website">
     <style>
         * {
             margin: 0;
@@ -331,6 +340,27 @@
         }
 
         @media (max-width: 640px) {
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                padding: 12px 15px;
+            }
+
+            .logo-main {
+                font-size: 1.2rem;
+            }
+
+            .logo-tagline {
+                font-size: 0.6rem;
+                letter-spacing: 1.5px;
+            }
+
+            .phone-cta {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+
             .container {
                 padding: 15px;
             }
@@ -374,7 +404,7 @@
                 <a href="/" class="logo-main">JAS TRAINING</a>
                 <div class="logo-tagline">TRAIN • REMEMBER • PRACTICE</div>
             </div>
-            <a href="tel:+447123456789" class="phone-cta">Call Joe: 07123 456 789</a>
+            <a href="tel:+447427816007" class="phone-cta">Call Joe: 07427 816 007</a>
         </div>
     </header>
 
@@ -579,9 +609,11 @@
         }
 
         function nextQuestion() {
+            console.log('Next question clicked. Current:', currentQuestion, 'Total:', questions.length);
             currentQuestion++;
-            
+
             if (currentQuestion >= questions.length) {
+                console.log('Completing assessment...');
                 completeAssessment();
             } else {
                 showQuestion(currentQuestion);
@@ -596,11 +628,26 @@
         }
 
         function completeAssessment() {
+            console.log('completeAssessment called');
+            console.log('Answers collected:', answers);
+
+            // Check if all questions answered
+            if (answers.length < questions.length || answers.includes(undefined)) {
+                console.error('Not all questions answered!', answers);
+                alert('Please answer all questions before completing the assessment.');
+                return;
+            }
+
             // Calculate results
-            const criticalCount = answers.filter(a => a.risk === 'critical').length;
-            const warningCount = answers.filter(a => a.risk === 'warning').length;
-            const goodCount = answers.filter(a => a.risk === 'good').length;
-            
+            const criticalCount = answers.filter(a => a && a.risk === 'critical').length;
+            const warningCount = answers.filter(a => a && a.risk === 'warning').length;
+            const goodCount = answers.filter(a => a && a.risk === 'good').length;
+
+            // Calculate risk score (0-100, higher is worse)
+            const riskScore = Math.round(
+                ((criticalCount * 40) + (warningCount * 20) + (goodCount * 0)) / questions.length * 10
+            );
+
             let riskLevel = 'low';
             if (criticalCount >= 2) {
                 riskLevel = 'critical';
@@ -624,12 +671,38 @@
                 complianceGaps: answers.filter(a => a.risk !== 'good').map(a => a.category),
                 immediateNeeds: answers.filter(a => a.risk === 'critical').map(a => a.category)
             };
-            
+
             localStorage.setItem('assessmentResults', JSON.stringify(assessmentResults));
-            
+
+            // Track Facebook Pixel Complete Registration event
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'CompleteRegistration', {
+                    content_name: 'Safety Assessment Completed',
+                    status: true,
+                    value: riskScore,
+                    content_category: 'assessment'
+                });
+            }
+
             // Redirect to thank you page
             window.location.href = 'thank-you.html';
         }
+    </script>
+
+    <!-- Facebook Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+
+        // Facebook Pixel ID for Joe's campaign
+        fbq('init', '1279358166934984');
+        fbq('track', 'PageView');
     </script>
 </body>
 </html>
