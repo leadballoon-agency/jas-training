@@ -2645,6 +2645,16 @@
 
         fbq('init', '1279358166934984');
         fbq('track', 'PageView');
+
+        // Helper function to hash data for Facebook Advanced Matching
+        async function sha256(str) {
+            const normalized = str.toLowerCase().trim();
+            const encoder = new TextEncoder();
+            const data = encoder.encode(normalized);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
     </script>
     <noscript>
         <img height="1" width="1" style="display:none"
@@ -2713,11 +2723,16 @@
             // Store first name for assessment page
             localStorage.setItem('firstName', firstName.trim());
 
-            // Track Facebook Pixel Lead event
+            // Track Facebook Pixel Lead event with Advanced Matching
             if (typeof fbq !== 'undefined') {
-                fbq('track', 'Lead', {
-                    content_name: 'Safety Assessment Started',
-                    content_category: 'assessment'
+                sha256(firstName.trim()).then(fnHash => {
+                    fbq('track', 'Lead', {
+                        content_name: 'Safety Assessment Started',
+                        content_category: 'assessment'
+                    }, {
+                        fn: fnHash,
+                        country: 'gb'
+                    });
                 });
             }
 

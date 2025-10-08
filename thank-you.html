@@ -530,12 +530,12 @@
             <div class="tagline">TRAIN • REMEMBER • PRACTICE</div>
         </header>
 
-        <!-- Results Card -->
-        <div class="results-card">
+        <!-- Results Card - Hidden until form submission -->
+        <div class="results-card" id="resultsCard" style="display: none;">
             <div class="results-header">
                 <div class="results-icon" id="resultsIcon">⚠️</div>
-                <h1 class="results-title">Assessment Complete, <span id="userName">there</span>!</h1>
-                <p class="results-subtitle">Your workplace safety compliance report is ready</p>
+                <h1 class="results-title">Your Results, <span id="userName">there</span>!</h1>
+                <p class="results-subtitle">Here's your workplace safety compliance report</p>
             </div>
 
             <div class="risk-assessment">
@@ -569,13 +569,12 @@
             </div>
         </div>
 
-        <!-- Lead Form Card -->
-        <div class="lead-form-card">
+        <!-- Lead Form Card - Shown first, before results -->
+        <div class="lead-form-card" id="leadFormCard">
             <div class="form-header">
-                <h2 class="form-title">Get Your Full Safety Report & Fix These Issues</h2>
+                <h2 class="form-title">🎯 Your Results Are Ready!</h2>
                 <p class="form-subtitle">
-                    Joe will personally review your assessment and provide a tailoured action plan 
-                    to achieve full HSE compliance before your next inspection
+                    Enter your details below to unlock your personalized safety assessment report and get Joe's expert action plan
                 </p>
             </div>
 
@@ -597,47 +596,13 @@
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="company">Company Name</label>
-                        <input type="text" id="company" name="company" placeholder="Your Company Ltd">
-                    </div>
-                    <div class="form-group">
-                        <label for="employees">Number of Employees</label>
-                        <div class="custom-select" onclick="toggleDropdown('employees')">
-                            <input type="hidden" id="employees" name="employees" value="">
-                            <div class="select-display" id="employees-display">Select range</div>
-                            <div class="dropdown-options" id="employees-options">
-                                <div class="dropdown-option" onclick="selectOption('employees', '1-10', '1-10')">1-10</div>
-                                <div class="dropdown-option" onclick="selectOption('employees', '11-25', '11-25')">11-25</div>
-                                <div class="dropdown-option" onclick="selectOption('employees', '26-50', '26-50')">26-50</div>
-                                <div class="dropdown-option" onclick="selectOption('employees', '51-100', '51-100')">51-100</div>
-                                <div class="dropdown-option" onclick="selectOption('employees', '100+', '100+')">100+</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="form-group">
-                    <label for="industry">Industry *</label>
-                    <div class="custom-select" onclick="toggleDropdown('industry')">
-                        <input type="hidden" id="industry" name="industry" value="" required>
-                        <div class="select-display" id="industry-display">Select your industry</div>
-                        <div class="dropdown-options" id="industry-options">
-                            <div class="dropdown-option" onclick="selectOption('industry', 'construction', 'Construction')">Construction</div>
-                            <div class="dropdown-option" onclick="selectOption('industry', 'manufacturing', 'Manufacturing')">Manufacturing</div>
-                            <div class="dropdown-option" onclick="selectOption('industry', 'offshore', 'Offshore/Energy')">Offshore/Energy</div>
-                            <div class="dropdown-option" onclick="selectOption('industry', 'corporate', 'Corporate/Office')">Corporate/Office</div>
-                            <div class="dropdown-option" onclick="selectOption('industry', 'hospitality', 'Hospitality')">Hospitality</div>
-                            <div class="dropdown-option" onclick="selectOption('industry', 'healthcare', 'Healthcare')">Healthcare</div>
-                            <div class="dropdown-option" onclick="selectOption('industry', 'retail', 'Retail')">Retail</div>
-                            <div class="dropdown-option" onclick="selectOption('industry', 'other', 'Other')">Other</div>
-                        </div>
-                    </div>
+                    <label for="company">Company Name *</label>
+                    <input type="text" id="company" name="company" required placeholder="Your Company Ltd">
                 </div>
 
                 <button type="submit" class="submit-btn" id="submitBtn">
-                    GET MY DETAILED REPORT & BOOK CONSULTATION
+                    SHOW MY RESULTS →
                 </button>
 
                 <div class="loading" id="loading">
@@ -645,6 +610,15 @@
                     <p>Generating your personalised safety plan...</p>
                 </div>
             </form>
+
+            <div style="text-align: center; margin-top: 25px; padding-top: 20px; border-top: 2px solid rgba(255,255,255,0.1);">
+                <p style="color: rgba(255,255,255,0.9); margin-bottom: 15px; font-size: 1rem;">
+                    Or speak to Joe directly:
+                </p>
+                <a href="tel:+447782218226" class="submit-btn" style="display: inline-block; background: rgba(255,255,255,0.15); border: 2px solid #84D11E; text-decoration: none; padding: 16px 32px;">
+                    📞 CALL JOE NOW: 07782 218 226
+                </a>
+            </div>
 
             <div class="trust-elements">
                 <div class="trust-item">
@@ -784,14 +758,14 @@
         // Form submission
         document.getElementById('leadForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const submitBtn = document.getElementById('submitBtn');
             const loading = document.getElementById('loading');
-            
+
             // Show loading
             submitBtn.disabled = true;
             loading.classList.add('active');
-            
+
             // Gather form data
             const formData = new FormData(this);
             const leadData = {
@@ -799,41 +773,89 @@
                 email: formData.get('email'),
                 phone: formData.get('phone'),
                 company: formData.get('company'),
-                employees: formData.get('employees'),
-                industry: formData.get('industry'),
                 ...results
             };
-            
+
+            // Track Facebook Pixel Lead event with Advanced Matching
+            if (typeof fbq !== 'undefined') {
+                // Hash user data for better Event Match Quality
+                Promise.all([
+                    sha256(leadData.email),
+                    sha256(leadData.phone.replace(/\s+/g, '')), // Remove spaces from phone
+                    sha256(leadData.firstName)
+                ]).then(([emailHash, phoneHash, fnHash]) => {
+                    fbq('track', 'Lead', {
+                        content_name: 'Safety Assessment Lead',
+                        value: results.riskLevel === 'critical' ? 1500 : results.riskLevel === 'high' ? 1000 : 750,
+                        currency: 'GBP'
+                    }, {
+                        // Advanced Matching parameters (hashed)
+                        em: emailHash,
+                        ph: phoneHash,
+                        fn: fnHash,
+                        country: 'gb',
+                        external_id: emailHash // Use email hash as external ID
+                    });
+                });
+            }
+
             // Send to GHL if integration exists
             if (window.GHLIntegration) {
                 try {
                     await window.GHLIntegration.completeLeadCapture(leadData);
+                    console.log('Lead sent to GHL successfully');
                 } catch (error) {
                     console.error('GHL submission error:', error);
                 }
             }
-            
-            // Show success (in real implementation, redirect to booking page)
+
+            // Hide form, show results
             setTimeout(() => {
-                loading.innerHTML = `
-                    <div style="color: #10b981; font-size: 3rem;">✅</div>
-                    <p style="color: white; font-size: 1.2rem; font-weight: 600; margin-top: 16px;">
-                        Thank you ${userName}!
-                    </p>
-                    <p style="color: rgba(255,255,255,0.9); margin-top: 12px;">
-                        Your detailed safety report has been generated.<br>
-                        Joe will call you within 24 hours to discuss your training needs.
-                    </p>
-                    <p style="color: #84D11E; font-weight: 600; margin-top: 20px;">
-                        Check your email for your full report
-                    </p>
-                `;
-            }, 2000);
+                document.getElementById('leadFormCard').style.display = 'none';
+                document.getElementById('resultsCard').style.display = 'block';
+
+                // Scroll to results smoothly
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }, 1500);
         });
 
         // Initialize on load
         displayResults();
         startCountdown();
     </script>
+
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+
+        fbq('init', '1279358166934984');
+        fbq('track', 'PageView');
+
+        // Helper function to hash data for Facebook Advanced Matching
+        async function sha256(str) {
+            // Normalize: lowercase and trim whitespace
+            const normalized = str.toLowerCase().trim();
+            const encoder = new TextEncoder();
+            const data = encoder.encode(normalized);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=1279358166934984&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
 </body>
 </html>
