@@ -770,10 +770,18 @@
             const formData = new FormData(this);
             const leadData = {
                 firstName: userName,
+                lastName: '', // Add empty last name field
                 email: formData.get('email'),
                 phone: formData.get('phone'),
                 company: formData.get('company'),
-                ...results
+                industry: '', // Add empty industry field
+                employees: '', // Add empty employees field
+                // Assessment results
+                riskLevel: results.riskLevel,
+                score: results.score,
+                complianceGaps: results.complianceGaps,
+                immediateNeeds: results.immediateNeeds,
+                answers: results.answers
             };
 
             // Track Facebook Pixel Lead event with Advanced Matching
@@ -802,11 +810,15 @@
             // Send to GHL if integration exists
             if (window.GHLIntegration) {
                 try {
-                    await window.GHLIntegration.completeLeadCapture(leadData);
-                    console.log('Lead sent to GHL successfully');
+                    console.log('Sending lead data to GHL:', leadData);
+                    const result = await window.GHLIntegration.completeLeadCapture(leadData);
+                    console.log('Lead sent to GHL successfully:', result);
                 } catch (error) {
                     console.error('GHL submission error:', error);
+                    console.error('Failed lead data:', leadData);
                 }
+            } else {
+                console.error('GHLIntegration not found on window object');
             }
 
             // Hide form, show results

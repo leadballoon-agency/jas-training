@@ -2723,10 +2723,10 @@
             // Store first name for assessment page
             localStorage.setItem('firstName', firstName.trim());
 
-            // Track Facebook Pixel Lead event with Advanced Matching
+            // Track Facebook Pixel InitiateCheckout event (NOT Lead - that's for form submissions)
             if (typeof fbq !== 'undefined') {
                 sha256(firstName.trim()).then(fnHash => {
-                    fbq('track', 'Lead', {
+                    fbq('track', 'InitiateCheckout', {
                         content_name: 'Safety Assessment Started',
                         content_category: 'assessment'
                     }, {
