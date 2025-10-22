@@ -548,10 +548,17 @@
         // Decrypt data from URL
         function decryptData(encryptedData) {
             try {
-                const decoded = atob(decodeURIComponent(encryptedData));
-                return JSON.parse(decoded);
+                // First decode URI component (handles URL encoding)
+                let decoded = decodeURIComponent(encryptedData);
+                // Then decode base64
+                decoded = atob(decoded);
+                // Finally parse JSON
+                const data = JSON.parse(decoded);
+                console.log('Successfully decrypted data:', data);
+                return data;
             } catch (error) {
                 console.error('Decryption error:', error);
+                console.error('Failed to decrypt:', encryptedData);
                 return null;
             }
         }
