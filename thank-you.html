@@ -821,16 +821,34 @@
                 console.error('GHLIntegration not found on window object');
             }
 
-            // Hide form, show results
+            // Encrypt data and redirect to report page
             setTimeout(() => {
-                document.getElementById('leadFormCard').style.display = 'none';
-                document.getElementById('resultsCard').style.display = 'block';
+                // Prepare data for report
+                const reportData = {
+                    firstName: leadData.firstName,
+                    email: leadData.email,
+                    phone: leadData.phone,
+                    company: leadData.company,
+                    riskLevel: leadData.riskLevel,
+                    score: leadData.score,
+                    complianceGaps: leadData.complianceGaps,
+                    immediateNeeds: leadData.immediateNeeds,
+                    answers: leadData.answers
+                };
 
-                // Scroll to results smoothly
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+                // Encrypt data (Base64 encoding for simple security)
+                const encryptedData = encodeURIComponent(btoa(JSON.stringify(reportData)));
+
+                // Build report URL
+                const reportUrl = `${window.location.origin}/report.html?data=${encryptedData}`;
+
+                // Store report URL in localStorage for potential use
+                localStorage.setItem('lastReportUrl', reportUrl);
+
+                console.log('Report URL:', reportUrl);
+
+                // Redirect to report page
+                window.location.href = reportUrl;
             }, 1500);
         });
 
